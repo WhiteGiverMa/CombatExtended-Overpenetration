@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyName>CEOverpenetration</AssemblyName>
+		<LangVersion>12.0</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<OutputPath>..\..\Assemblies\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>embedded</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4543" GeneratePathProperty="true" />
+		<PackageReference Include="Lib.Harmony" Version="2.3.6" ExcludeAssets="runtime" />
+	</ItemGroup>
+	<ItemGroup>
+		<Publicize Include="Assembly-CSharp" />
+	</ItemGroup>
+	<ItemGroup>
+		<!-- Reference CE's compiled assembly (not source) -->
+		<Reference Include="CombatExtended">
+			<HintPath>..\..\..\CombatExtended\Assemblies\CombatExtended.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+</Project>

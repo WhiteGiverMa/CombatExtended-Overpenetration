@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	<!-- Example: Enable overpenetration on .243 Winchester FMJ and AP rounds.
+	     FMJ has sharp=13, good for penetrating multiple unarmored targets.
+	     AP has sharp=23, can potentially punch through lightly armored targets too.
+
+	     To enable on other bullets, copy this pattern:
+	     1. Patch the Bullet_ ThingDef (not the Ammo_ def)
+	     2. Add the OverpenetrationExtension modExtension
+	-->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="Bullet_243Winchester_FMJ"]</xpath>
+		<value>
+			<modExtensions>
+				<li Class="CEOverpenetration.OverpenetrationExtension">
+					<enabled>true</enabled>
+					<dragFactor>0.15</dragFactor>
+					<maxTargets>3</maxTargets>
+				</li>
+			</modExtensions>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="Bullet_243Winchester_AP"]</xpath>
+		<value>
+			<modExtensions>
+				<li Class="CEOverpenetration.OverpenetrationExtension">
+					<enabled>true</enabled>
+					<dragFactor>0.12</dragFactor>
+					<maxTargets>4</maxTargets>
+				</li>
+			</modExtensions>
+		</value>
+	</Operation>
+
+	<!-- Example: 12.7x55mm — heavy round, high penetration, good overpenetration -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="Bullet_127x55mm_AP"]</xpath>
+		<value>
+			<modExtensions>
+				<li Class="CEOverpenetration.OverpenetrationExtension">
+					<enabled>true</enabled>
+					<dragFactor>0.10</dragFactor>
+					<maxTargets>5</maxTargets>
+				</li>
+			</modExtensions>
+		</value>
+	</Operation>
+</Patch>

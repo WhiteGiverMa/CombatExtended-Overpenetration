@@ -1,0 +1,13 @@
+# Build artifacts
+Source/**/obj/
+Source/**/bin/
+Assemblies/*.pdb
+Assemblies/*.xml
+
+# IDE
+.vs/
+*.user
+*.suo
+
+# Handoff docs (local only)
+.agents/

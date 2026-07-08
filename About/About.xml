@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>CE Overpenetration</name>
+	<author>WhiteGiverMa</author>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<packageId>WhiteGiverMa.CEOverpenetration</packageId>
+	<description>Adds overpenetration (bullets passing through targets) to Combat Extended. Bullets that penetrate a target's armor with remaining penetration power will continue flying, with damage and speed reduced based on the target's body size and armor consumed.
+
+Requires Combat Extended.</description>
+	<modDependencies>
+		<li>
+			<packageId>CETeam.CombatExtended</packageId>
+			<displayName>Combat Extended</displayName>
+		</li>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>CETeam.CombatExtended</li>
+		<li>brrainz.harmony</li>
+	</loadAfter>
+</ModMetaData>
