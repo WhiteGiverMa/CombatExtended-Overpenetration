@@ -9,7 +9,6 @@ namespace CEOverpenetration;
 /// </summary>
 public class OverpenState
 {
-    public float kineticMult = 1f;
     public int overpenCount = 0;
     public HashSet<Thing> alreadyHit = new HashSet<Thing>();
     public bool skipBaseImpact = false;
