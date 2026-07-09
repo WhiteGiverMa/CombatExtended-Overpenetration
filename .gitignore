@@ -9,9 +9,10 @@ Assemblies/*.xml
 *.user
 *.suo
 
-# Handoff docs (local only)
-.agents/
+# Local handoff docs
+.agents/handoff/
 
 # Local agent/research scratch
 .ce_temp/
 .omo/
+.codegraph/
