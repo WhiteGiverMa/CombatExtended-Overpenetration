@@ -8,6 +8,8 @@
 	<packageId>WhiteGiverMa.CEOverpenetration</packageId>
 	<description>Adds overpenetration (bullets passing through targets) to Combat Extended. Bullets that penetrate a target's armor with remaining penetration power will continue flying, with damage and speed reduced based on the target's body size and armor consumed.
 
+Breaching AI fixes have been split into CE Breaching Fix. Elite combat stat tuning has been split into CE Elite Combat Tweaks.
+
 Requires Combat Extended.</description>
 	<modDependencies>
 		<li>

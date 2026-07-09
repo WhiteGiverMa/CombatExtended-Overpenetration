@@ -11,3 +11,7 @@ Assemblies/*.xml
 
 # Handoff docs (local only)
 .agents/
+
+# Local agent/research scratch
+.ce_temp/
+.omo/
