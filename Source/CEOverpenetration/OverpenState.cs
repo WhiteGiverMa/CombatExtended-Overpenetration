@@ -1,19 +1,11 @@
 using System.Collections.Generic;
-using Verse;
 
 namespace CEOverpenetration;
 
-/// <summary>
-/// Per-projectile overpenetration state, stored via ConditionalWeakTable.
-/// Not serialized — on save/load, worst case is a re-hit on the same target (harmless).
-/// </summary>
-public class OverpenState
+public sealed class OverpenState
 {
-    public int overpenCount = 0;
-    public HashSet<Thing> alreadyHit = new HashSet<Thing>();
-    public bool skipBaseImpact = false;
-    /// <summary>Armor result from the most recent GetAfterArmorDamage call for this bullet.</summary>
-    public float remainingPen;
-    public bool armorDeflected;
-    public bool sharpWasDeflected;
+    public int overpenCount;
+    public readonly HashSet<int> alreadyHitThingIds = new();
+    public bool skipBaseImpact;
+    public bool continuationActive;
 }

@@ -6,7 +6,7 @@
 		<li>1.6</li>
 	</supportedVersions>
 	<packageId>WhiteGiverMa.CEOverpenetration</packageId>
-	<description>Adds overpenetration (bullets passing through targets) to Combat Extended. Bullets that penetrate a target's armor with remaining penetration power will continue flying, with damage and speed reduced based on the target's body size and armor consumed.
+	<description>Adds generic overpenetration (bullets passing through pawns) to Combat Extended. Eligible ballistic sharp projectiles continue automatically after a successful armor result, with CE-native damage and penetration reduced through retained velocity. No per-ammunition configuration is required.
 
 Breaching AI fixes have been split into CE Breaching Fix. Elite combat stat tuning has been split into CE Elite Combat Tweaks.
 

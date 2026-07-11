@@ -6,30 +6,15 @@ Combat Extended 子 mod — 子弹穿过敌人继续飞行。
 
 ### 1. 过穿透 (Overpenetration)
 
-Ballistic 子弹穿透目标的护甲后如果还有剩余穿深，会穿过目标继续飞行，伤害和穿深按速度衰减。
+所有普通 ballistic 锐伤子弹在穿透 Pawn 的护甲后都会自动判断是否继续飞行，不需要逐弹种配置。伤害和穿深由 CE 根据穿透后的实际速度继续计算。
 
-**数值模型：**
-```
-speedRetention = Pow(1 - dragFactor * armorRatio, min(bodySize, 4))
-```
-- `remainingPen` = CE 护甲计算后剩余穿深，由 `resultDamage / originalDamage` 反推
-- `armorConsumed` = `currentPen - remainingPen`
-- `armorRatio` = `Clamp01(armorConsumed / currentPen)`，即被目标护甲消耗的穿深比例
-- `bodySize` = 目标体型（人类=1，大象=4，cap=4）
-- 穿过 bodySize=4 的大象 ≈ 穿过 4 个 bodySize=1 的人类
-- 穿透后直接缩放 CE projectile 的 `velocity/shotSpeed`
-- 穿深/伤害、空气阻力和重力由 CE 原生 `RemainingSpeedPct/RemainingKineticEnergyPct` 后续接管
-
-**配置** — 在子弹 ThingDef 上加 ModExtension：
-```xml
-<modExtensions>
-  <li Class="CEOverpenetration.OverpenetrationExtension">
-    <enabled>true</enabled>
-    <dragFactor>0.15</dragFactor>
-    <maxTargets>3</maxTargets>
-  </li>
-</modExtensions>
-```
+**行为模型：**
+- 仅处理 `BulletCE + BallisticsTrajectoryWorker + Sharp` 的 Pawn 命中。
+- 完全偏转、护盾吸收、锐伤转钝伤、爆炸弹和 overhead 弹丸不会过穿。
+- 目标护甲吸收比例和 BodySize 决定速度损失。
+- 穿透后原弹丸从命中点继续正常 Tick，不传送，因此 CE/VEF 护盾和 BlockerRegistry 仍能拦截。
+- 后续穿深、伤害、空气阻力和重力由 CE 原生速度模型接管。
+- 命中历史和链式穿透计数会随存档保存。
 
 ## 职责拆分
 
