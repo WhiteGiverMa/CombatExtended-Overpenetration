@@ -106,6 +106,14 @@ public static class OverpenetrationBridge
         return false;
     }
 
+    // Terminal payloads consume or split the projectile at its first valid impact.
+    private static bool HasTerminalPayload(ProjectileCE projectile)
+    {
+        return projectile.def.projectile.explosionRadius > 0f
+            || projectile.TryGetComp<CompExplosiveCE>() != null
+            || projectile.GetComps<CompFragments>().Any();
+    }
+
     private static void TryContinueProjectile(
         BulletCE bullet,
         Thing impactTarget,
@@ -118,7 +126,7 @@ public static class OverpenetrationBridge
         if (!ReferenceEquals(impactTarget, pawn)) return;
         if (bullet.TrajectoryWorker is not BallisticsTrajectoryWorker and not LerpedTrajectoryWorker) return;
         if (bullet.def.projectile.flyOverhead) return;
-        if (bullet.def.projectile.explosionRadius > 0f) return;
+        if (HasTerminalPayload(bullet)) return;
         if (originalDinfo.Def?.armorCategory != DamageArmorCategoryDefOf.Sharp) return;
         if (resultDinfo.Def?.armorCategory != DamageArmorCategoryDefOf.Sharp) return;
         if (armorDeflected || shieldAbsorbed) return;
