@@ -15,11 +15,7 @@ public static class OverpenetrationBridge
 {
     private const int MaxTargets = 16;
     private const float MinimumPenetration = 0.1f;
-    private const float BaseTissueResistance = 0.08f;
-    private const float ArmorResistanceWeight = 0.45f;
-    private const float BodySizeResistanceWeight = 0.10f;
-    private const float MinimumSpeedRetention = 0.20f;
-    private const float MaximumSpeedRetention = 0.92f;
+    private const float MinimumExitSpeedRetention = 0.20f;
 
     private static readonly ConditionalWeakTable<ProjectileCE, OverpenState> States = new();
     private static readonly FieldInfo DamageAmountField = AccessTools.Field(typeof(ProjectileCE), "damageAmount");
@@ -145,14 +141,14 @@ public static class OverpenetrationBridge
         if (currentPenetration <= MinimumPenetration) return;
 
         float transmittedDamageRatio = Mathf.Clamp01(resultDinfo.Amount / originalDinfo.Amount);
-        float armorResistanceRatio = 1f - transmittedDamageRatio;
-        float effectiveBodySize = Mathf.Min(pawn.BodySize, 4f);
-        float resistance = BaseTissueResistance
-            + armorResistanceRatio * ArmorResistanceWeight
-            + effectiveBodySize * BodySizeResistanceWeight;
-        float speedRetention = Mathf.Clamp(Mathf.Exp(-resistance), MinimumSpeedRetention, MaximumSpeedRetention);
+        float postArmorPenetration = currentPenetration * transmittedDamageRatio;
+        // ponytail: CE exposes tissue density but not direction-resolved pawn thickness; cube-root BodySize estimates traversal length.
+        float bodyTraversalResistance = pawn.GetStatValue(CE_StatDefOf.BodyPartSharpArmor)
+            * Mathf.Pow(pawn.BodySize, 1f / 3f);
+        float exitPenetration = postArmorPenetration - bodyTraversalResistance;
+        float speedRetention = exitPenetration / currentPenetration;
 
-        if (currentPenetration * speedRetention <= MinimumPenetration) return;
+        if (exitPenetration <= MinimumPenetration || speedRetention < MinimumExitSpeedRetention) return;
 
         bullet.velocity *= speedRetention;
         bullet.shotSpeed = bullet.velocity.magnitude * GenTicks.TicksPerRealSecond;
